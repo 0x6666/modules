@@ -1,1 +1,2 @@
-GET     /@jobs      Jobs.Status
+GET     /@jobs      		Jobs.Status
+POST    /@jobs      		Jobs.Run

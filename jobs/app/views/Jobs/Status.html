@@ -19,6 +19,9 @@ table tr:nth-child(odd) {
 th {
   text-align: left;
 }
+form {
+	margin: 0;
+}
 		</style>
 	</head>
 	<body>
@@ -26,7 +29,7 @@ th {
 <h1>Scheduled Jobs</h1>
 
 <table>
-	<tr><th>Name</th><th>Status</th><th>Last run</th><th>Next run</th></tr>
+	<tr><th>Name</th><th>Status</th><th>Last run</th><th>Next run</th><th>Opration</th></tr>
 {{range .entries}}
 	{{$job := castjob .Job}}
 	<tr>
@@ -34,6 +37,12 @@ th {
 		<td>{{$job.Status}}</td>
 		<td>{{if not .Prev.IsZero}}{{.Prev.Format "2006-01-02 15:04:05"}}{{end}}</td>
 		<td>{{if not .Next.IsZero}}{{.Next.Format "2006-01-02 15:04:05"}}{{end}}</td>
+		<td>
+			<form name="runForm" method="POST" action="/@jobs">
+				<input type="hidden" name="name" value="{{$job.Name}}">
+				<A href="javascript:document.runForm.submit()">Run</A>
+		</form>
+		</td>
 	</tr>
 {{end}}
 </table>
